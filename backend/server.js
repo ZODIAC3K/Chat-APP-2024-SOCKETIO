@@ -10,7 +10,7 @@ const server = createServer(app); // create a http server using the express app
 const io = new Server(server, {
 	cors: {
 		origin: "*",
-	},
+	}, // this will allow all origins to connect to the socket io server
 }); // create a socket io server using the http server which was created using the express app
 
 app.get("/", (req, res) => {
