@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { Button, TextField, Container } from "@mui/material";
+import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import React, { useEffect, useState } from "react";
 
 const socket = io("http://localhost:5001"); // create a socket connection to the server
 
@@ -9,7 +11,11 @@ const App = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		socket.emit("msg", message);
+		if (!message) {
+			alert("Please enter a message");
+		} else {
+			socket.emit("msg", message);
+		}
 	};
 
 	useEffect(() => {
@@ -40,29 +46,32 @@ const App = () => {
 	}, []);
 
 	return (
-		<Container>
-			<h1>Welcome to Socket.io</h1>
-			<form
-				className="flex flex-col m-2"
-				onSubmit={handleSubmit}
-			>
-				<TextField
-					value={message}
-					onChange={(e) => setMessage(e.target.value)}
-					label="Enter Message"
-					variant="outlined"
-					id="outlined-basic"
-					color="primary"
-				></TextField>
-				<Button
-					type="submit"
-					variant="contained"
-					color="primary"
+		<Card className="w-96 mx-auto mt-10 p-4">
+			<CardHeader>
+				<CardTitle>Welcome to Socket.io</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<form
+					className="flex flex-col space-y-4"
+					onSubmit={handleSubmit}
 				>
-					Send
-				</Button>
-			</form>
-		</Container>
+					<Input
+						value={message}
+						onChange={(e) => setMessage(e.target.value)}
+						placeholder="Enter Message"
+						className="border border-gray-300 p-2 rounded"
+					/>
+					<Button
+						variant="outline"
+						size="lg"
+						className="bg-black text-white"
+						type="submit"
+					>
+						Send
+					</Button>
+				</form>
+			</CardContent>
+		</Card>
 	);
 };
 
