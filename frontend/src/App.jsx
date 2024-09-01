@@ -57,9 +57,7 @@ const App = () => {
 						className="border border-gray-300 p-2 rounded"
 					/>
 					<Button
-						variant="outline"
 						size="lg"
-						className="bg-black text-white"
 						type="submit"
 					>
 						Send
