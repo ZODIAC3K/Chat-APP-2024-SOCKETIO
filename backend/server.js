@@ -3,7 +3,7 @@ import { createServer } from "http"; // import http
 import { Server } from "socket.io"; // import socket.io
 // we will manage routes from express and socket connection using socket.io but since socket io needs a http server we pass the express app to the http server and then pass the http server to the socket io server
 
-const Port = 5000; // define a port number
+const Port = 5001; // define a port number
 
 const app = express(); // create an express app
 const server = createServer(app); // create a http server using the express app
@@ -22,11 +22,22 @@ io.on("connection", (socket) => {
 
 	console.log("User Connected and Socket ID: ", socket.id);
 
-	socket.on("chat", (payload) => {
-		console.log("Data: ", payload);
-		io.emit("chat", payload);
+	// Listen for the 'welcome' event which is triggered when the client sends the 'welcome' event
+	socket.on("welcome", (msg) => {
+		console.log("User ID: ", socket.id, "---", "Message-Client: ", msg);
+		// once the server receives the 'welcome' event from the client, it will respond with a 'msg' event
+		socket.emit(
+			"msg",
+			"HELLO CLIENT! This is the server. Nice to meet you!"
+		);
 	});
 
+	socket.on("msg", (msg) => {
+		console.log("User ID: ", socket.id);
+		console.log("Message: ", msg);
+	});
+
+	// listen for the 'disconnect' event which is triggered when the client disconnects from the socket io server
 	socket.on("disconnect", () => {
 		console.log("User Disconnected and Socket ID: ", socket.id);
 	});
