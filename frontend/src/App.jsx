@@ -38,11 +38,6 @@ const App = () => {
 				);
 			});
 		});
-
-		// Trigger the 'disconnect' event when the component unmounts on restart of the frontend
-		return () => {
-			socket.disconnect();
-		};
 	}, []);
 
 	return (
