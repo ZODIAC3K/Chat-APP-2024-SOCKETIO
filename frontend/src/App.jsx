@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-
+import { Button, TextField, Container } from "@mui/material";
 
 const socket = io("http://localhost:5001"); // create a socket connection to the server
 
@@ -40,31 +40,29 @@ const App = () => {
 	}, []);
 
 	return (
-		<>
-				<h1>
-					Welcome to Socket.io
-				</h1>
-				<form
-					className="flex flex-col m-2"
-					onSubmit={handleSubmit}
+		<Container>
+			<h1>Welcome to Socket.io</h1>
+			<form
+				className="flex flex-col m-2"
+				onSubmit={handleSubmit}
+			>
+				<TextField
+					value={message}
+					onChange={(e) => setMessage(e.target.value)}
+					label="Enter Message"
+					variant="outlined"
+					id="outlined-basic"
+					color="primary"
+				></TextField>
+				<Button
+					type="submit"
+					variant="contained"
+					color="primary"
 				>
-					<TextField
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-						label="Enter Message"
-						variant="outlined"
-						id="outlined-basic"
-						color="primary"
-					></TextField>
-					<Button
-						type="submit"
-						variant="contained"
-						color="primary"
-					>
-						Send
-					</Button>
-				</form>
-		</>
+					Send
+				</Button>
+			</form>
+		</Container>
 	);
 };
 
