@@ -22,16 +22,6 @@ io.on("connection", (socket) => {
 
 	console.log("User Connected and Socket ID: ", socket.id);
 
-	// Listen for the 'welcome' event which is triggered when the client sends the 'welcome' event
-	socket.on("welcome", (msg) => {
-		console.log("User ID: ", socket.id, "---", "Message-Client: ", msg);
-		// once the server receives the 'welcome' event from the client, it will respond with a 'msg' event
-		socket.emit(
-			"msg",
-			"HELLO CLIENT! This is the server. Nice to meet you!"
-		);
-	});
-
 	socket.on("msg", (msg) => {
 		console.log("User ID: ", socket.id);
 		console.log("Message: ", msg);
