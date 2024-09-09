@@ -10,17 +10,24 @@ import {
 } from "./components/ui/accordion";
 
 import React, { useEffect, useState } from "react";
-
-const socket = io("http://localhost:5001"); // create a socket connection to the server
+import { useMemo } from "react";
 
 const App = () => {
 	const [message, setMessage] = useState("");
+	const socket = useMemo(() => io("http://localhost:5001"), []); // connect to the socket io server using useMemo so that it only connects once when the component is mountedx
+
+	useEffect(() => {
+		socket.on("msg-2", (msg) => {
+			console.log("Message-Received From Others: ", msg);
+		});
+	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!message) {
 			alert("Please enter a message");
 		} else {
+			console.log("Message-Sent To Others: ", message);
 			socket.emit("msg", message);
 		}
 	};

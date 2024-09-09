@@ -23,8 +23,11 @@ io.on("connection", (socket) => {
 	console.log("User Connected and Socket ID: ", socket.id);
 
 	socket.on("msg", (msg) => {
+		// gettting the message from the client side
 		console.log("User ID: ", socket.id);
 		console.log("Message: ", msg);
+		// sending the message to all the clients except the one who sent the message
+		socket.broadcast.emit("msg-2", msg);
 	});
 
 	// listen for the 'disconnect' event which is triggered when the client disconnects from the socket io server
